@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Three.js GLTF Viewer</title>
+
+    <!-- CSSを読み込む -->
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- Three.jsのモジュール読み込み設定 -->
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- メニューの動作 -->
+    <script type="module" src="./menu.js"></script>
+
+    <!-- Three.jsの処理 -->
+    <script type="module" src="./main.js"></script>
+</head>
+
+<body>
+
+<!-- ロゴ -->
+<div class="logo">
+    <img src="logo.svg" alt="ちいさな宝箱">
+</div>
+
+    <!-- ハンバーガーメニューボタン -->
+<div class="menu">
+    <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="メニューを開く"
+        aria-expanded="false"
+>
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</div>
+
+<!-- メニュー項目 -->
+<nav class="menu-panel" id="menuPanel">
+    <button class="menu-item" data-page="concept">CONCEPT</button>
+    <button class="menu-item" data-page="making">MAKING</button>
+    <button class="menu-item" data-page="about">ABOUT ME</button>
+</nav>
+
+<!-- 各ページの内容を表示するパネル -->
+<section class="content-panel" id="contentPanel">
+
+    <!-- CONCEPT -->
+    <div class="page-content" id="concept">
+        <h2>CONCEPT</h2>
+
+        <div class="page-body">
+            <!-- ここにCONCEPTの内容を書く -->
+        </div>
+    </div>
+
+    <!-- MAKING -->
+    <div class="page-content" id="making">
+        <h2>MAKING</h2>
+
+        <div class="page-body">
+            <!-- ここにMAKINGの内容を書く -->
+        </div>
+    </div>
+
+    <!-- ABOUT ME -->
+    <div class="page-content" id="about">
+        <h2>ABOUT ME</h2>
+
+        <div class="page-body">
+            <!-- ここにABOUT MEの内容を書く -->
+        </div>
+    </div>
+
+</section>
+
+    <!-- モデル読み込み中の表示 -->
+    <div id="loading">
+        <div class="loading-bar">
+            <div id="loading-progress"></div>
+        </div>
+        <div class="loading-text">Loading...</div>
+    </div>
+
+    <!-- Three.jsの3Dモデル表示エリア -->
+    <div id="canvas-container"></div>
+</body>
+</html>
