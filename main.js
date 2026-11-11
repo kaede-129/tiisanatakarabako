@@ -788,9 +788,9 @@ async function openChest(index) {
         platform.parent.remove(platform);
 
         // ミニチュア全体の位置を調整
-        room.position.x += 0.2;
+        room.position.x += 0;
         room.position.y += 1;
-        room.position.z += 1;
+        room.position.z += 1.5;
 
         room.updateMatrixWorld(true);
 
