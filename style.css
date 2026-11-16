@@ -12,7 +12,7 @@ body {
 
     overflow: hidden;
 
-    background-color: #91c9f5;
+    background-color: #c99ee2;
 
     background-image: linear-gradient(
         to bottom,
@@ -172,9 +172,8 @@ body {
     box-sizing: border-box;
     width: 190px;
     padding: 18px 22px;
-    background: white;
+    background: rgb(192, 219, 219);
     border-radius: 30px;
-    box-shadow: 10px 10px 0 #e3c5f0;
 
     display: flex;
     flex-direction: column;
@@ -210,11 +209,11 @@ body {
     padding: 20px 0;
 
     border: none;
-    border-bottom: 1px solid #777;
+    border-bottom: 1px solid #ffffff;
 
     background: transparent;
 
-    color: #777;
+    color: #ffffff;
     font-family: inherit;
     font-size: 15px;
     font-weight: normal;
@@ -229,7 +228,7 @@ body {
 }
 
 .menu-item:hover {
-    color: #c6a1df;
+    color: #a0a0a0;
 }
 
 
@@ -251,9 +250,8 @@ body {
     min-height: 280px;
     padding: 32px 28px 25px;
 
-    background: white;
+    background: rgb(192, 219, 219);
     border-radius: 30px;
-    box-shadow: 10px 10px 0 #e3c5f0;
     z-index: 2000;
 
     display: block;
@@ -285,7 +283,7 @@ body {
 
     height: 100%;
 
-    color: #777;
+    color: #ffffff;
 }
 
 /* 選択したページだけ表示 */
@@ -306,9 +304,9 @@ body {
 
     padding: 3px 0 27px;
 
-    border-bottom: 1px solid #777;
+    border-bottom: 1px solid #ffffff;
 
-    color: #777;
+    color: #edff4c;
 
     font-size:17px;
     font-weight: normal;

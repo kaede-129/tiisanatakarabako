@@ -738,6 +738,102 @@ function loadRoom(index) {
 }
 
 
+// =========================
+// ミニチュア周囲の自然な光の粒
+// =========================
+
+function createDustParticles(parent) {
+    const count = 80;
+
+    parent.updateMatrixWorld(true);
+
+    const bounds = new THREE.Box3().setFromObject(parent);
+
+    // ワールド座標から部屋のローカル座標に変換
+    const min = parent.worldToLocal(bounds.min.clone());
+    const max = parent.worldToLocal(bounds.max.clone());
+
+    const width = max.x - min.x;
+    const height = max.y - min.y;
+    const depth = max.z - min.z;
+
+    const positions = new Float32Array(count * 3);
+    const particleData = [];
+
+    for (let i = 0; i < count; i++) {
+        positions[i * 3] =
+            min.x + (Math.random() * (width + 1.5)) - 0.75;
+
+        positions[i * 3 + 1] =
+            min.y + Math.random() * (height + 0.8) -0.5;
+
+        positions[i * 3 + 2] =
+            min.z + (Math.random() * (depth + 1.5)) - 0.75;
+
+        particleData.push({
+            speed: 0.08 + Math.random() * 0.12,
+            phase: Math.random() * Math.PI * 2,
+            startY: positions[i * 3 + 1]
+        });
+    }
+
+    // ぼかした光のテクスチャ
+    const canvas = document.createElement("canvas");
+    canvas.width = 64;
+    canvas.height = 64;
+
+    const ctx = canvas.getContext("2d");
+
+    const gradient = ctx.createRadialGradient(
+        32, 32, 0,
+        32, 32, 32
+    );
+
+    gradient.addColorStop(0, "rgba(255,255,255,1)");
+    gradient.addColorStop(0.15, "rgba(255,250,220,0.9)");
+    gradient.addColorStop(0.4, "rgba(255,240,190,0.35)");
+    gradient.addColorStop(1, "rgba(255,240,190,0)");
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 64, 64);
+
+    const texture = new THREE.CanvasTexture(canvas);
+
+    const geometry = new THREE.BufferGeometry();
+
+    geometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(positions, 3)
+    );
+
+    const material = new THREE.PointsMaterial({
+        color: 0xfff4d6,
+        size: 0.16,
+        map: texture,
+        transparent: true,
+        opacity: 0.85,
+        depthWrite: false,
+        blending: THREE.NormalBlending
+    });
+    
+    const particles = new THREE.Points(
+        geometry,
+        material
+    );
+    // 粒子が移動する高さの範囲を保存
+    particles.userData.minY = min.y;
+    particles.userData.maxY = max.y + 0.8;
+
+    parent.add(particles);
+
+    // アニメーション情報を保存
+    particles.userData.particleData = particleData;
+
+    return particles;
+}
+
+
+
 // 宝箱のアニメーションを再生
 function playChestAnimation(record) {
 
@@ -828,6 +924,10 @@ async function openChest(index) {
 
         // ミニチュアハウスを表示
         displayGroup.add(room);
+
+        // 周囲に自然な光の粒を追加
+        const dust = createDustParticles(room);
+        room.userData.dustParticles = dust;
 
         // 開封済みにする
         record.opened = true;
@@ -1101,6 +1201,43 @@ function animate() {
         }
 
     });
+
+    
+    // ミニチュア周囲の光の粒を更新
+displayGroup.children.forEach((room) => {
+
+    const dust = room.userData.dustParticles;
+
+    if (!dust) return;
+
+    const positions = dust.geometry.attributes.position;
+    const data = dust.userData.particleData;
+    const time = clock.elapsedTime;
+
+    for (let i = 0; i < data.length; i++) {
+
+        const y = i * 3 + 1;
+        const x = i * 3;
+
+        // ゆっくり上に漂う
+        positions.array[y] += data[i].speed * delta;
+
+        // 上まで行った粒子は下に戻す
+        if (positions.array[y] > dust.userData.maxY) {
+            positions.array[y] = dust.userData.minY;
+        }
+
+        // 左右にも少し揺れる
+        positions.array[x] +=
+            Math.sin(time * 0.5 + data[i].phase) * delta * 0.06;
+    }
+
+    positions.needsUpdate = true;
+
+    // 光の強さをゆっくり変化させる
+    dust.material.opacity =
+        0.65 + Math.sin(time * 0.8) * 0.2;
+});
 
     // カメラ操作を更新
     controls.update();
