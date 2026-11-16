@@ -807,13 +807,15 @@ function createDustParticles(parent) {
     );
 
     const material = new THREE.PointsMaterial({
-        color: 0xfff4d6,
-        size: 0.16,
+        color: 0xffffff,
+        size: 0.4,
         map: texture,
         transparent: true,
-        opacity: 0.85,
+        opacity: 1.0,
         depthWrite: false,
-        blending: THREE.NormalBlending
+        blending: THREE.AdditiveBlending,
+        toneMapped: false,
+        sizeAttenuation: false
     });
     
     const particles = new THREE.Points(
@@ -1235,8 +1237,7 @@ displayGroup.children.forEach((room) => {
     positions.needsUpdate = true;
 
     // 光の強さをゆっくり変化させる
-    dust.material.opacity =
-        0.65 + Math.sin(time * 0.8) * 0.2;
+    dust.material.opacity = 1;
 });
 
     // カメラ操作を更新
