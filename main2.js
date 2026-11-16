@@ -807,15 +807,14 @@ function createDustParticles(parent) {
     );
 
     const material = new THREE.PointsMaterial({
-        color: 0xffffff,
-        size: 0.4,
-        map: texture,
+        color: 0xff00ff,
+        size: 12,
         transparent: true,
-        opacity: 1.0,
+        opacity: 1,
         depthWrite: false,
-        blending: THREE.AdditiveBlending,
-        toneMapped: false,
-        sizeAttenuation: false
+        depthTest: false,
+        sizeAttenuation: false,
+        toneMapped: false
     });
     
     const particles = new THREE.Points(
