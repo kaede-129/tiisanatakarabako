@@ -17,6 +17,7 @@ const pages = document.querySelectorAll(".page-content");
 function openMenu() {
     menuPanel.classList.add("active");
     contentPanel.classList.remove("active");
+    menuButton.classList.add("active");
 
     menuButton.setAttribute("aria-expanded", "true");
 }
@@ -28,6 +29,7 @@ function openMenu() {
 
 function closeMenu() {
     menuPanel.classList.remove("active");
+    menuButton.classList.remove("active");
 
     menuButton.setAttribute("aria-expanded", "false");
 }
