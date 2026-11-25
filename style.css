@@ -16,8 +16,8 @@ body {
 
     background-image: linear-gradient(
         to bottom,
-        #e1f8f6 0%,
-        #ddcfe0 100%
+        #fdffff 0%,
+        #c1e0e6 100%
     );
 }
 
@@ -220,26 +220,78 @@ body {
 
 .menu-item {
     width: 100%;
-    padding: 22px 0;
+    padding: 30px 5px;
 
-    border: none;
     background: transparent;
 
-    color: #999999;
+    color: #a8cbdc;
     font-family: inherit;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: normal;
+    text-align: left;
+    letter-spacing: 0.5px;
 
-    text-align: center;
+    border: none;
+    border-bottom: 1.5px solid #d9eaf0;
+
     cursor: pointer;
 }
+
 
 .menu-item:last-child {
     border-bottom: none;
 }
 
 .menu-item:hover {
-    color: #d9c3e8;
+    color: #a8cbdc;
+}
+
+.menu-item span {
+    position: relative;
+    display: inline-block;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.menu-item:hover span {
+    transform: scale(1);
+}
+
+.menu-item span::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+
+    background: linear-gradient(
+        90deg,
+        #a8cbdc,
+        #f1e878,
+        #a8cbdc
+    );
+
+    background-size: 200% 100%;
+    background-position: 0% 50%;
+
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    clip-path: inset(0 100% 0 0);
+}
+
+.menu-item:hover span::after {
+    clip-path: inset(0 0 0 0);
+    animation: gradientFlow 3s linear infinite;
+}
+
+@keyframes gradientFlow {
+    from {
+        background-position: 0% 50%;
+    }
+    to {
+        background-position: 200% 50%;
+    }
 }
 
 /* 惑星の装飾 */
@@ -255,7 +307,7 @@ body {
     height: auto;
 
     right: -30px;
-    bottom: 50px;
+    bottom: 18px;
 
     z-index: -1;
 
@@ -264,6 +316,25 @@ body {
     opacity: 0.9;
 }
 
+.menu-star {
+    position: absolute;
+
+    width: 21px;
+    height: auto;
+
+    right: 40px;
+    bottom : 298px
+}
+
+.menu-star2 {
+    position: absolute;
+
+    width: auto;
+    height: auto;
+
+    right: 180px;
+    bottom: 590px;
+}
 /* =========================
    内容パネル
 ========================= */
@@ -290,9 +361,9 @@ body {
     opacity: 0;
     visibility: hidden;
     transition:
-        transform 0.4s ease,
-        opacity 0.4s ease,
-        visibility 0.4s;
+        transform 1s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 1s ease,
+        visibility 1s;
     pointer-events: none;
 }
 
@@ -341,7 +412,7 @@ body {
 
     border-bottom: 1px solid #ffffff;
 
-    color: #edff4c;
+    color: #a8cbdc;
 
     font-size:17px;
     font-weight: normal;
@@ -468,6 +539,6 @@ body {
     .menu-planet {
         width: 350px;
         right: -30px;
-        bottom: 50px;
+        bottom: 25px;
     }
 }
