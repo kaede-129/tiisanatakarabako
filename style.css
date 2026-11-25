@@ -539,14 +539,14 @@ body {
     .menu-planet {
         width: 350px;
         right: -30px;
-        bottom: 40px;
+        bottom: 70px;
     }
 
     .menu-star {
-        bottom: 100px;
+        bottom: 400pxpx;
     }
 
     .menu-star2 {
-        bottom: 100px;
+        bottom: 700px;
     }
 }
